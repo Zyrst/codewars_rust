@@ -1,4 +1,6 @@
 
+//Given a string reverse each word
+//Returns string with reversed words
 fn reverse_words(str: &str) -> String {
     
     let mut return_string = String::new();
@@ -31,6 +33,7 @@ fn reverse_string(phrase: &str) -> String {
     phrase.chars().rev().collect::<String>()
 }
 
+//Given a volume, return number of cubes that fits (descending order n^3 n-1^3 etc), if none return -1
 fn find_nb(n: u64) -> i32 {
     let mut i:u64 = 1;
     let mut run = true;
@@ -56,6 +59,7 @@ fn find_nb(n: u64) -> i32 {
     return_cubes
 }
 
+//Get time in ms
 fn past(h: i32, m: i32, s: i32) -> i32 {
     (s * 1000) + (m * 60 * 1000) + (h * 60 * 60 * 1000)
 }
@@ -83,8 +87,8 @@ fn main() {
     assert_eq!(find_nb(26825883955641), 3218);
 
     assert_eq!(past(0, 1, 1), 61000);
-        assert_eq!(past(1, 1, 1), 3661000);
-        assert_eq!(past(0, 0, 0), 0);
-        assert_eq!(past(1, 0, 1), 3601000);
-        assert_eq!(past(1, 0, 0), 3600000);
+    assert_eq!(past(1, 1, 1), 3661000);
+    assert_eq!(past(0, 0, 0), 0);
+    assert_eq!(past(1, 0, 1), 3601000);
+    assert_eq!(past(1, 0, 0), 3600000);
 }
