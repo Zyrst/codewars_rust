@@ -64,6 +64,51 @@ fn past(h: i32, m: i32, s: i32) -> i32 {
     (s * 1000) + (m * 60 * 1000) + (h * 60 * 60 * 1000)
 }
 
+// Unable to finish, working taken from codewars
+fn longest_consec(strarr: Vec<&str>, k: usize) -> String {
+    
+    if k > strarr.len() || k == 0 || strarr.len() == 0 { String::new() } else {
+        strarr.windows(k).map(|x| { x.join("") }).rev().max_by_key(String::len).unwrap()
+    }
+    
+    /*let array_length = strarr.len();
+    if array_length == 0 || array_length < k || k <= 0 {
+        return String::new();
+    }
+
+    let mut concat_string = String::new();
+
+    let mut sr = strarr;
+    sr.sort_by(|x, y| y.len().cmp(&x.len()));
+    sr.sort();
+
+    let mut yzx: Vec<&str> = sr.iter().take(k).map(|&x| x).collect();
+    yzx.sort();
+
+    yzx.iter().for_each(|x| concat_string.push_str(x));
+    concat_string*/
+}
+
+fn opposite(number: i32) -> i32 {
+    -number
+}
+
+fn positive_sum(arr: &[i32]) -> i32 {
+    let mut sum : i32 = 0;
+    arr.iter().filter(|x| x.is_positive()).for_each(|x| sum += x);
+    sum
+}
+
+fn count_positives_sum_negatives(input: Vec<i32>) -> Vec<i32> {
+    let positive_sum = input.iter().filter(|x| x.is_positive()).count();
+    let negative_sum = input.iter().filter(|x| x.is_negative()).sum();
+
+    if positive_sum == 0 && negative_sum == 0 {
+        return vec![];
+    }
+    return vec![positive_sum as i32, negative_sum];
+}
+
 fn main() {
     assert_eq!(reverse_words("The quick brown fox jumps over the lazy dog."), "ehT kciuq nworb xof spmuj revo eht yzal .god");
     assert_eq!(reverse_words("apple"), "elppa");
@@ -91,4 +136,23 @@ fn main() {
     assert_eq!(past(0, 0, 0), 0);
     assert_eq!(past(1, 0, 1), 3601000);
     assert_eq!(past(1, 0, 0), 3600000);
+
+    assert_eq!(longest_consec(vec!["zone", "abigail", "theta", "form", "libe", "zas"], 2), "abigailtheta");
+    assert_eq!(longest_consec(vec!["ejjjjmmtthh", "zxxuueeg", "aanlljrrrxx", "dqqqaaabbb", "oocccffuucccjjjkkkjyyyeehh"], 1), "oocccffuucccjjjkkkjyyyeehh");
+    assert_eq!(longest_consec(vec![], 3), "");
+    assert_eq!(longest_consec(vec!["it","wkppv","ixoyx", "3452", "zzzzzzzzzzzz"], 3), "ixoyx3452zzzzzzzzzzzz");
+    assert_eq!(longest_consec(vec!["it","wkppv","ixoyx", "3452", "zzzzzzzzzzzz"], 15), "");
+    assert_eq!(longest_consec(vec!["it","wkppv","ixoyx", "3452", "zzzzzzzzzzzz"], 0), "");
+
+    assert_eq!(opposite(1), -1);
+    assert_eq!(opposite(-1), 1);
+
+    assert_eq!(positive_sum(&[1,2,3,4,5]), 15);
+    assert_eq!(positive_sum(&[1,-2,3,4,5]), 13);
+    assert_eq!(positive_sum(&[-1,2,3,4,-5]), 9);
+    assert_eq!(positive_sum(&[]), 0);
+    assert_eq!(positive_sum(&[-1,-2,-3,-4,-5]), 0);
+
+    assert_eq!(count_positives_sum_negatives(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -11, -12, -13, -14, -15]), vec![10, -65]);
+    assert_eq!(count_positives_sum_negatives(vec![0,0]), vec![]);
 }
