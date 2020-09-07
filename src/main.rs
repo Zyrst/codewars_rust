@@ -109,6 +109,25 @@ fn count_positives_sum_negatives(input: Vec<i32>) -> Vec<i32> {
     return vec![positive_sum as i32, negative_sum];
 }
 
+fn bmi(weight: u32, height: f32) -> &'static str {
+    let calc =  (weight as f32) / height.powf(2.0);
+    if calc <= 18.5 {
+        return "Underweight"
+    }
+    else if calc <= 25.0 {
+        return "Normal";
+    }
+    else if calc <= 30.0 {
+        return "Overweight";
+    }
+    else if calc > 30.0 {
+        return "Obese";
+    }
+    else {
+        return "";
+    }
+}
+
 fn main() {
     assert_eq!(reverse_words("The quick brown fox jumps over the lazy dog."), "ehT kciuq nworb xof spmuj revo eht yzal .god");
     assert_eq!(reverse_words("apple"), "elppa");
@@ -155,4 +174,9 @@ fn main() {
 
     assert_eq!(count_positives_sum_negatives(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -11, -12, -13, -14, -15]), vec![10, -65]);
     assert_eq!(count_positives_sum_negatives(vec![0,0]), vec![]);
+
+    assert_eq!(bmi(50, 1.80), "Underweight");
+        assert_eq!(bmi(80, 1.80), "Normal");
+        assert_eq!(bmi(90, 1.80), "Overweight");
+        assert_eq!(bmi(110, 1.80), "Obese");
 }
