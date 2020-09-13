@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 
 //Given a string reverse each word
 //Returns string with reversed words
@@ -128,6 +129,23 @@ fn bmi(weight: u32, height: f32) -> &'static str {
     }
 }
 
+
+fn count_duplicates(text: &str) -> u32 {
+    // Your code goes here
+    let mut char_occurence: HashMap<char, u32> = HashMap::new();
+    for c in text.to_lowercase().chars() {
+        if char_occurence.contains_key(&c) {
+            let val = char_occurence[&c] + 1;
+            char_occurence.insert(c, val);
+        }
+        else {
+            char_occurence.insert(c, 1);
+        }
+    }
+
+    char_occurence.values().filter(|&&x| x > 1).count() as u32
+}
+
 fn main() {
     assert_eq!(reverse_words("The quick brown fox jumps over the lazy dog."), "ehT kciuq nworb xof spmuj revo eht yzal .god");
     assert_eq!(reverse_words("apple"), "elppa");
@@ -176,7 +194,10 @@ fn main() {
     assert_eq!(count_positives_sum_negatives(vec![0,0]), vec![]);
 
     assert_eq!(bmi(50, 1.80), "Underweight");
-        assert_eq!(bmi(80, 1.80), "Normal");
-        assert_eq!(bmi(90, 1.80), "Overweight");
-        assert_eq!(bmi(110, 1.80), "Obese");
+    assert_eq!(bmi(80, 1.80), "Normal");
+    assert_eq!(bmi(90, 1.80), "Overweight");
+    assert_eq!(bmi(110, 1.80), "Obese");
+
+    assert_eq!(count_duplicates("abcde"), 0);
+    assert_eq!(count_duplicates("abcdea"), 1);
 }
