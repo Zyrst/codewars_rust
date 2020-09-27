@@ -146,6 +146,29 @@ fn count_duplicates(text: &str) -> u32 {
     char_occurence.values().filter(|&&x| x > 1).count() as u32
 }
 
+fn rot13(message: &str) -> String {
+    let mut return_string = String::new();
+
+    for s in message.chars()
+    {
+        if !s.is_ascii_alphabetic(){
+            return_string.push(s);
+        }
+        else {
+            //println!("{}", s.to_digit(16).unwrap());
+            let matched = match s {
+                'A' ..= 'M' | 'a' ..= 'm' => ((s as u8) + 13) as char,
+                'N' ..= 'Z' | 'n' ..= 'z' => ((s as u8) - 13) as char,
+                _ => s
+            };
+
+            return_string.push(matched);
+        }
+    }
+
+    return_string
+}
+
 fn main() {
     assert_eq!(reverse_words("The quick brown fox jumps over the lazy dog."), "ehT kciuq nworb xof spmuj revo eht yzal .god");
     assert_eq!(reverse_words("apple"), "elppa");
@@ -200,4 +223,7 @@ fn main() {
 
     assert_eq!(count_duplicates("abcde"), 0);
     assert_eq!(count_duplicates("abcdea"), 1);
+
+    assert_eq!(rot13("test13"), "grfg13");
+    assert_eq!(rot13("Test"), "Grfg");
 }
