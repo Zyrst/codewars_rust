@@ -169,6 +169,31 @@ fn rot13(message: &str) -> String {
     return_string
 }
 
+fn evaporator(content: f64, evap_per_day: i32, threshold: i32) -> i32 {
+    let mut current_content = content;
+    let calc_threshold = content * ((threshold as f64 / 100.0)) ;
+    let calculated_evap = (evap_per_day as f64) / 100.0;
+    let mut num_of_days = 0;
+    while current_content > calc_threshold {
+        current_content -= current_content * calculated_evap;
+        num_of_days += 1;
+    }
+    
+    num_of_days
+}
+
+
+fn dotest(_content: f64, evap_per_day: i32, threshold: i32, exp: i32) -> () {
+    println!(" evap_per_day: {:?}", evap_per_day);
+    println!("threshold: {:?}", threshold);
+    let ans = evaporator(_content, evap_per_day, threshold);
+    println!(" actual:\n{:?}", ans);
+    println!("expect:\n{:?}", exp);
+    println!(" {};", ans == exp);
+    assert_eq!(ans, exp);
+    println!("{};", "-");
+}
+
 fn main() {
     assert_eq!(reverse_words("The quick brown fox jumps over the lazy dog."), "ehT kciuq nworb xof spmuj revo eht yzal .god");
     assert_eq!(reverse_words("apple"), "elppa");
@@ -226,4 +251,7 @@ fn main() {
 
     assert_eq!(rot13("test13"), "grfg13");
     assert_eq!(rot13("Test"), "Grfg");
+
+    dotest(10.0, 10, 10, 22);
+    dotest(10.0, 10, 5, 29);
 }
